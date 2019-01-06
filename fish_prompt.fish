@@ -2,14 +2,14 @@
 # Find latest version from: https://github.com/godfat/fish_prompt-gitstatus
 
 function _git_branch_name
-  echo (command git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
+  echo (command git symbolic-ref HEAD 2> /dev/null | sed -e 's|^refs/heads/||')
 end
 
 function _git_status_symbol
-  set -l git_status (git status --porcelain ^/dev/null)
+  set -l git_status (git status --porcelain 2> /dev/null)
   if test -n "$git_status"
     # Is there anyway to preserve newlines so we can reuse $git_status?
-    if git status --porcelain ^/dev/null | grep '^.[^ ]' >/dev/null
+    if git status --porcelain 2> /dev/null | grep '^.[^ ]' >/dev/null
       echo '*' # dirty
     else
       echo '#' # all staged
