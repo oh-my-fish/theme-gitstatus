@@ -6,10 +6,9 @@ function _git_branch_name
 end
 
 function _git_status_symbol
-  set -l git_status (git status --porcelain 2> /dev/null)
+  set -l git_status (git status --porcelain 2> /dev/null | string collect)
   if test -n "$git_status"
-    # Is there anyway to preserve newlines so we can reuse $git_status?
-    if git status --porcelain 2> /dev/null | grep '^.[^ ]' >/dev/null
+    if echo $git_status | grep '^.[^ ]' >/dev/null
       echo '*' # dirty
     else
       echo '#' # all staged
